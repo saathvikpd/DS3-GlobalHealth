@@ -5,7 +5,8 @@ import streamlit as st
 import math
 #read csv and processe
 fm_year_avg = pd.read_csv("female_male_year copy.csv")
-BMI_Income = pd.read_csv("bmi_population_income.csv")
+merged_final_pop = pd.read_csv("bmi_population_income.csv")
+df_male_country = pd.read_csv("male_country copy.csv");
 
 # set up sidebar
 a = st.sidebar
@@ -217,38 +218,37 @@ if choice == "Lung Cancer Death":
     # streamlit function to dispaly plotly drawing. Check the correct function for matplotlib or others.
     st.plotly_chart(male_female_deaths_fig)
 
-    # adding interactive selectbox so users can explore
+    # countries and death 
+    df_male_cancer_fig = px.bar(df_male_country, x = "country", y = "deaths")
+    st.plotly_chart(df_male_cancer_fig)
+
+    # top 10 countries with deaths --> males
+    top_countries_male = df_male_country[:10]
+    fig_top_male_lc = px.bar(top_countries_male, x = "country", y = "deaths")
+    st.plotly_chart(fig_top_male_lc)
+    
+
+if choice == "BMI and Income": 
+    
     st.write("""
-    ### Explore Satisfaction Rate Between Genders for a Specific Subregion
+    ### Example: Overall Average death by year for females and males
     """)
-    year = st.selectbox("Year: ",np.array(Male_Female_lung_cancer["year"]))
-    df = fm_year_avg[fm_year_avg["year"] == year]
-    male_female_deaths_fig = px.scatter(fm_year_avg, x = "year", y = fm_year_avg.columns[1:])
-    male_female_deaths_fig.update_xaxes(tickangle = 45)
-    st.plotly_chart(male_female_deaths_fig)
+    # the same way as you would draw in jupyter notebook
+    df = merged_final_pop
+    fig = px.scatter(df,x="income", y="BMI",
+	         color= "gender", symbol = 'country', size='population',
+                 hover_name='country', size_max=20, animation_frame = 'year')
+    st.plotly_chart(fig)
 
-
-# if choice == "Lung Cancer Death": 
-#     example = Male_Female_lung_cancer.groupby("year").mean().reset_index
-
-#     st.write("""
-#     ### Example: Overall Average death by year for females and males +++++
-#     """)
-#     # the same way as you would draw in jupyter notebook
-#     male_female_deaths_fig = px.scatter(fm_year_avg, x = "year", y = fm_year_avg.columns[1:])
-#     male_female_deaths_fig.update_xaxes(tickangle = 45)
-#     # streamlit function to dispaly plotly drawing. Check the correct function for matplotlib or others.
-#     st.plotly_chart(male_female_deaths_fig)
-
-#     # adding interactive selectbox so users can explore
-#     st.write("""
-#     ### Explore Satisfaction Rate Between Genders for a Specific Subregion
-#     """)
-#     year = st.selectbox("Year: ",np.array(Male_Female_lung_cancer["year"]))
-#     df = Male_Female_lung_cancer[Male_Female_lung_cancer["year"] == year]
-#     male_female_deaths_fig = px.scatter(fm_year_avg, x = "year", y = fm_year_avg.columns[1:])
-#     male_female_deaths_fig.update_xaxes(tickangle = 45)
-#     st.plotly_chart(male_female_deaths_fig)
+    # # adding interactive selectbox so users can explore
+    # st.write("""
+    # ### Explore Satisfaction Rate Between Genders for a Specific Subregion
+    # """)
+    # year = st.selectbox("Year: ",np.array(df["year"]))
+    # df = df[Male_Female_lung_cancer["year"] == year]
+    # male_female_deaths_fig = px.scatter(fm_year_avg, x = "year", y = fm_year_avg.columns[1:])
+    # male_female_deaths_fig.update_xaxes(tickangle = 45)
+    # st.plotly_chart(male_female_deaths_fig)
 
 
 
