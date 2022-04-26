@@ -5,8 +5,12 @@ import streamlit as st
 import math
 #read csv and processe
 fm_year_avg = pd.read_csv("female_male_year copy.csv")
+df_male_country = pd.read_csv("male_country copy.csv")
+
 merged_final_pop = pd.read_csv("bmi_population_income.csv")
-df_male_country = pd.read_csv("male_country copy.csv");
+merged_year_avg = pd.read_csv("bmi_year_avg.csv")
+
+
 
 # set up sidebar
 a = st.sidebar
@@ -231,7 +235,7 @@ if choice == "Lung Cancer Death":
 if choice == "BMI and Income": 
     
     st.write("""
-    ### Example: Overall Average death by year for females and males
+    overall trend for BMI per country over years
     """)
     # the same way as you would draw in jupyter notebook
     df = merged_final_pop
@@ -239,6 +243,17 @@ if choice == "BMI and Income":
 	         color= "gender", symbol = 'country', size='population',
                  hover_name='country', size_max=20, animation_frame = 'year')
     st.plotly_chart(fig)
+
+    st.write("""
+    Average BMI per year for females and males
+    """)
+
+    fig_year_avg = px.scatter(merged_year_avg, x = "year", y = merged_year_avg.columns[1:], title = 
+                         "Average BMI per Year", labels={
+                     "value": "BMI",
+                 })
+    fig_year_avg.update_xaxes(tickangle = 45)
+    st.plotly_chart(fig_year_avg)
 
     # # adding interactive selectbox so users can explore
     # st.write("""
