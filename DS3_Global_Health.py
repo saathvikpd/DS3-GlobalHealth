@@ -172,26 +172,26 @@ if choice == "%female in The House":
     st.plotly_chart(fig)
 
 
-    st.write("""
-    ### Explore % of female in The House for a specific region
-    """)
-    region_selection = np.append(np.array(Gdp_vs_femaleH.Region.unique()), ["All Regions"])
-    Region_female = st.selectbox("Region:" , region_selection)
-    for j in region_selection :
-        if j == Region_female:
-            if j == "All Regions":
-                df = Gdp_vs_femaleH
-            else:
-                df = Gdp_vs_femaleH[Gdp_vs_femaleH['Region'] == j]
-            break
+#     st.write("""
+#     ### Explore % of female in The House for a specific region
+#     """)
+#     region_selection = np.append(np.array(Gdp_vs_femaleH.Region.unique()), ["All Regions"])
+#     Region_female = st.selectbox("Region:" , region_selection)
+#     for j in region_selection :
+#         if j == Region_female:
+#             if j == "All Regions":
+#                 df = Gdp_vs_femaleH
+#             else:
+#                 df = Gdp_vs_femaleH[Gdp_vs_femaleH['Region'] == j]
+#             break
 
-    fig = px.scatter(df, x="GDPs", y="%female in the house",
-                     size="GDPs", color="Country Name",
-                     hover_name="Country Name", size_max=40, animation_frame='Year')
-    fig.update_layout(yaxis_title="%female in The House",
-                      xaxis_range=(np.min(df['GDPs']) * 0.5, np.max(df['GDPs']) * 1.2),
-                      yaxis_range=(np.min(df['%female in the house']) * 0.5, np.max(df['%female in the house']) * 1.2))
-    st.plotly_chart(fig)
+#     fig = px.scatter(df, x="GDPs", y="%female in the house",
+#                      size="GDPs", color="Country Name",
+#                      hover_name="Country Name", size_max=40, animation_frame='Year')
+#     fig.update_layout(yaxis_title="%female in The House",
+#                       xaxis_range=(np.min(df['GDPs']) * 0.5, np.max(df['GDPs']) * 1.2),
+#                       yaxis_range=(np.min(df['%female in the house']) * 0.5, np.max(df['%female in the house']) * 1.2))
+#     st.plotly_chart(fig)
 
 
 if choice == "Literacy":
