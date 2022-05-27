@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/WenyuanChen1326/DS3-Global_Health
+	fetch = +refs/*:refs/*
+	mirror = true
